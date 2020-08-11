@@ -150,7 +150,7 @@ const turnHoursToMinutes = arrayMovies => {
 // BONUS - Iteration 8: Best yearly rate average - Best yearly rate average
 
 //esta es una movida , pero te la explico 
-//esta funcion flecha devuelve la peli mejor valorada
+//esta funcion flecha el año con el mejor rate
 
 const bestYearAvg = arrayMovies => {
     // recorremos el array movies , si no tiene elementos es decir es vacio  la funcion bestYearAvg revuelve "null"
@@ -158,6 +158,7 @@ const bestYearAvg = arrayMovies => {
         return null
     }
 // una vez comprobado que no esta vacio  creamos un nuevo array con objetos que contienen solo la propiedad year y rate de cada peli recorrida.
+// es decir ej. newArray=[{year:2010,rate:5},{year:2020,rate:9}]
     const newArray = arrayMovies.map(item => {
         return {
             'year': item.year,
@@ -166,8 +167,9 @@ const bestYearAvg = arrayMovies => {
     })
 
 
-    // aqui lo que hace es crear un objto que contiene una propiedad por cada año con el año como nombre y 
-    //cada propiedad tiene un array con todos los rates de ese año pusheados
+
+    // aqui lo que hace es crear un objto que contiene una propiedad por cada año con el año como clave y 
+    //cada clave del objeto tiene un array con todos los rates de ese año pusheados
     const groupedArray = newArray.reduce((accumulator, currentValue) => {
 // aqui crea la propiedad del año en el objeto y le guarda un array donde se pushearan todos los rates de cada año respectivo
         (accumulator[currentValue.year] = accumulator[currentValue.year] || [])  
@@ -184,7 +186,7 @@ const bestYearAvg = arrayMovies => {
 
 
 
-//una vez que ya tenemos un objeto  todos los años conteniendo un array con todos los rates de ese año ahora los recorremos 
+//una vez que ya tenemos un objeto con todos los años conteniendo un array con todos los rates de ese año ahora los recorremos 
 // usamos un bucle de objetos 
     for (let key in groupedArray) {
         // aqui recorre cada año del objeto groupedArray
@@ -197,15 +199,16 @@ const bestYearAvg = arrayMovies => {
             return avgYear;
         })
 
-        //aqui lo que hace es  buscar el año recoddido  en groupedArray y le sustituye el valor al año correspondiente por la media calculada arriba en "avg"
+        //aqui lo que hace es  buscar el año recorrido  en groupedArray y le sustituye el valor al año correspondiente por la media calculada arriba en "avg"
         groupedArray[key] = avg
+        // si antes teniamos groupedArray = { 2010:[2,4,5,6], 2020:[3,6,7]} ahora tenemos //groupedArray = { 2010:6, 2020:10}
     }
 
     
     // aqui lo que hace es recorrer el objeto groupedArray y ahora lo que esta haciendo es  un array que contiene un elemento por cada año contenido en "groupedArray" ,
-    // cada objeto metido en el array contendra la propiedad year con el año e cuestion recorrido y su media de rate correspondiente
+    // cada objeto metido en el array contendra la propiedad year con el año en cuestion recorrido y su media de rate correspondiente
 
-    // es decir result = [{year:2010,rate:2},{year:2020,rate:5}]
+    // es decir result = [{year:2010,rate:6},{year:2020,rate:10}]
     const result = Object.keys(groupedArray).map(i => {
         return {
             'year': i,
